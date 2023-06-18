@@ -1,0 +1,14 @@
+---
+type Props = {
+  id?: string;
+};
+
+const { target = "main" } = Astro.props;
+---
+
+<a
+  href={`#${target}`}
+  class="sr-only start-1 top-[-1rem] text-accent transition-[top] ease-[cubic-bezier(0.18,0.89,0.32,1.27)] focus:not-sr-only focus:fixed focus:top-1.5 focus:p-4"
+>
+  Skip to content
+</a>

@@ -1,0 +1,113 @@
+---
+import { config } from "../config";
+
+type Props = {
+  title: string;
+  description?: string;
+  ogImage?: string | undefined;
+  articleDate?: string | undefined;
+};
+
+const { title, description, ogImage, articleDate } = Astro.props;
+
+const titleContent = `${title} • ${config.title}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(
+  ogImage ? ogImage : "/social-card.png",
+  Astro.url
+).href;
+---
+
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FCB001" />
+<meta name="msapplication-TileColor" content="#da532c" />
+
+<link rel="canonical" href={canonicalURL} />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`RSS Feed for ${config.author}'s blog`}
+  href="/rss.xml"
+/>
+
+<!-- Primary Meta Tags -->
+<title>{titleContent}</title>
+<meta name="title" content={titleContent} />
+<meta name="description" content={description} />
+<meta name="author" content={config.author} />
+<meta name="generator" content={Astro.generator} />
+<meta name="referrer" content="no-referrer" />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Theme Colour -->
+<meta
+  name="theme-color"
+  content={config.lightThemeColor}
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  name="theme-color"
+  content={config.darkThemeColor}
+  media="(prefers-color-scheme: dark)"
+/>
+<meta name="color-scheme" content="dark light" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={articleDate ? "article" : "website"} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={config.title} />
+<meta property="og:locale" content={config.locale.replace("-", "_")} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<!-- TODO: Add this -->
+<!-- <meta property="og:image:alt" content="A shiny red apple with a bite taken out" /> -->
+{
+  articleDate && (
+    <>
+      <meta property="article:author" content={config.author} />
+      <meta property="article:published_time" content={articleDate} />
+      {/* TODO */}
+      {/* <meta */}
+      {/* 	property="article:modified_time" */}
+      {/* 	content={lastModified || articleDate} */}
+      {/* /> */}
+      {/* TODO: this should be multiple tags */}
+      {/* <meta */}
+      {/* 	property="article:tag" */}
+      {/* 	content={tags} */}
+      {/* /> */}
+    </>
+  )
+}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />
+<!-- TODO: -->
+<!-- <meta property="twitter:image:alt" content={socialImageURL} /> -->
+
+<!-- RSS auto-discovery -->
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={config.title}
+  href="/rss.xml"
+/>

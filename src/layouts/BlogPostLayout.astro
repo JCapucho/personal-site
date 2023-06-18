@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./Layout.astro";
+
+const { title, isDraft } = Astro.props.frontmatter;
+---
+
+<BaseLayout title={title}>
+  <h1 class="text-4xl font-bold text-accent">{title}</h1>
+  <hr class="my-2 border-dashed border-textColor" />
+  {
+    isDraft && (
+      <div class="mx-auto my-4 rounded-sm bg-orange-700 p-4 text-center text-zinc-100">
+        <h1 class="text-center text-xl font-bold">
+          🛠️ This post is a draft 🛠️
+        </h1>
+        <p>It's contents are not final and might no be correct.</p>
+      </div>
+    )
+  }
+  <article class="prose prose-capucho">
+    <slot />
+  </article>
+</BaseLayout>

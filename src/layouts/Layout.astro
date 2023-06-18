@@ -1,36 +1,63 @@
 ---
-export interface Props {
-	title: string;
-}
+import { config } from "../config";
 
-const { title } = Astro.props;
+import Header from "../components/Header.astro";
+import CustomHead from "../components/Head.astro";
+import SkipLink from "../components/SkipLink.astro";
+import { themeStorageKey } from "../config";
+
+import "../styles/global.css";
+
+const { title } = Astro.props.frontmatter || Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html class="no-js" lang={config.locale}>
+  <head>
+    <CustomHead title={title} />
+  </head>
+  <body>
+    <noscript>
+      <div
+        class="mx-auto mb-8 rounded-sm bg-red-700 p-4 text-center text-zinc-100"
+      >
+        <h1 class="text-center font-bold">
+          You seem to have disabled javascript support in your browser
+        </h1>
+        <p>
+          This website should still function as normal minus the interactive
+          bits.
+        </p>
+        <br />
+        <p>
+          If you find any content that cannot be viewed without scripting and
+          you think should still be viewable please contact me.
+        </p>
+      </div>
+    </noscript>
+    <!-- Dark/Light mode bootstrap script -->
+    <script is:inline define:vars={{ themeStorageKey }}>
+      document.documentElement.classList.remove("no-js");
+      let theme = "dark";
+
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem(themeStorageKey)
+      ) {
+        theme = localStorage.getItem(themeStorageKey);
+      } else {
+        theme =
+          window.matchMedia("(prefers-color-scheme: dark)").matches !== null
+            ? "dark"
+            : "light";
+      }
+
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    </script>
+    <SkipLink />
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>

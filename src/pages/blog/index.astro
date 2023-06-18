@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/Layout.astro";
+// import BlogPost from "../components/BlogPost.astro";
+
+const allPosts = await getCollection("blog", ({ data }) => {
+  return data.isDraft !== true || import.meta.env.DEV;
+});
+---
+
+<BaseLayout title={"Blog"}>
+  <p>This is where I will post about my journey learning Astro.</p>
+  <ul>
+    {
+      allPosts.map((post) => (
+        // <BlogPost url={'/posts/' + post.slug} title={post.data.title} />
+        <a href={post.slug}>
+          {post.data.isDraft && "🛠️"}
+          {post.data.title}
+        </a>
+      ))
+    }
+  </ul>
+</BaseLayout>

@@ -1,0 +1,23 @@
+{
+  "name": "Jo\u00e3o Capucho",
+  "short_name": "Jo\u00e3o Capucho",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any"
+    }
+  ],
+  "theme_color": "#fcb001",
+  "background_color": "#fcb001",
+  "display": "standalone"
+}
