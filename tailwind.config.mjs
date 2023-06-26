@@ -58,6 +58,12 @@ export default {
             blockquote: {
               borderLeftWidth: "none",
             },
+            "blockquote::before": {
+              content: "none",
+            },
+            "blockquote::after": {
+              content: "none",
+            },
             hr: {
               borderTopStyle: "dashed",
             },

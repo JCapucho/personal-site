@@ -7,19 +7,21 @@ import PostImage from "@/components/blog/Image.astro";
 import DraftWarning from "@/components/blog/DraftWarning.astro";
 
 export interface Props {
-  frontmatter: CollectionEntry<"blog">["data"];
-  pluginFrontmatter: { minutesRead: string };
+  post: CollectionEntry<"blog">;
 }
 
 const { title, description, draft, publishDate, lastEditDate, tags, image } =
-  Astro.props.frontmatter;
-const { minutesRead } = Astro.props.pluginFrontmatter;
+  Astro.props.post.data;
+
+const { Content, headings, remarkPluginFrontmatter } =
+  await Astro.props.post.render();
+const { minutesRead } = remarkPluginFrontmatter;
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  article={Astro.props.frontmatter}
+  article={Astro.props.post.data}
 >
   <p class="pb-4">
     <Link href="/blog">&lt;- Return to all posts</Link>
@@ -32,9 +34,39 @@ const { minutesRead } = Astro.props.pluginFrontmatter;
     tags={tags}
   />
   {image && <PostImage image={image} />}
-  <hr class="my-2 border-dashed border-textColor" />
   {draft && <DraftWarning />}
-  <article class="article-prose">
-    <slot />
-  </article>
+  <div class="main-container flex flex-wrap-reverse items-end">
+    <article class="article-prose max-w-3xl shrink-0 flex-grow pr-16">
+      <hr class="my-2 mb-8 border-dashed border-textColor" />
+      <Content />
+    </article>
+    {
+      headings.length !== 0 && (
+        <aside class="my-8 pr-8">
+          <h2 class="text-2xl font-semibold text-accent">Table of Contents</h2>
+          <ul class="mt-4 text-sm">
+            {headings.map(({ depth, slug, text }) => (
+              <li class="line-clamp-2 hover:text-accent">
+                <a
+                  class={`block ${depth <= 2 ? "mt-3" : "mt-2 ps-3 text-xs"}`}
+                  href={`#${slug}`}
+                  aria-label={`Scroll to section: ${text}`}
+                >
+                  <span class="mr-2">{"#".repeat(depth)}</span>
+                  {text.replace(/^(#+)/, "")}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
+  </div>
 </BaseLayout>
+
+<style>
+  .main-container {
+    /* max-w-3xl + (screen - max-w-3xl - px-8)/2 */
+    width: calc(48rem + (100vw - 48rem - 4rem) / 2);
+  }
+</style>

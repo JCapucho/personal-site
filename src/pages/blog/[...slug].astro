@@ -9,14 +9,8 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, remarkPluginFrontmatter } = await entry.render();
 
 import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
 ---
 
-<BlogPostLayout
-  frontmatter={entry.data}
-  pluginFrontmatter={remarkPluginFrontmatter}
->
-  <Content />
-</BlogPostLayout>
+<BlogPostLayout post={entry} />

@@ -63,7 +63,7 @@
 
 @layer components {
   .article-prose {
-    @apply prose prose-capucho mt-12
+    @apply prose prose-capucho
     prose-headings:ms-2 prose-headings:font-semibold
     prose-a:border-b prose-a:border-accent2 prose-a:text-accent hover:prose-a:bg-accent2/50
     prose-blockquote:border-l-4 prose-blockquote:border-quoteColor
