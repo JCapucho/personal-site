@@ -1,8 +1,8 @@
 ---
-import { config } from "../config";
+import { config } from "@/config";
+import { MENU_LINKS } from "@/data/links";
+import logoReference from "@/assets/logo.svg";
 import ThemeToggle from "./ThemeToggle.astro";
-import { MENU_LINKS } from "../data/links";
-import logoReference from "../assets/logo.svg";
 
 const url = new URL(Astro.request.url);
 ---
@@ -38,7 +38,6 @@ const url = new URL(Astro.request.url);
         alt="Logo"
         class="me-3 h-10 w-6 sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
         aria-hidden="true"
-        focusable="false"
       />
       <span class="text-xl font-bold sm:text-2xl">{config.title}</span>
     </a>

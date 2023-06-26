@@ -1,20 +1,26 @@
 ---
-import { config } from "../config";
+import Header from "@/components/Header.astro";
+import CustomHead from "@/components/Head.astro";
+import SkipLink from "@/components/SkipLink.astro";
+import { config, themeStorageKey } from "@/config";
+import type { ArticleMetadata } from "@/utils";
 
-import Header from "../components/Header.astro";
-import CustomHead from "../components/Head.astro";
-import SkipLink from "../components/SkipLink.astro";
-import { themeStorageKey } from "../config";
+import "@/styles/global.css";
 
-import "../styles/global.css";
+export interface Props {
+  title: string;
+  description?: string;
+  article?: ArticleMetadata;
+  children: any;
+}
 
-const { title } = Astro.props.frontmatter || Astro.props;
+const { title, description, article } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html class="no-js" lang={config.locale}>
+<html class="no-js" lang={article ? article.language : config.locale}>
   <head>
-    <CustomHead title={title} />
+    <CustomHead title={title} description={description} article={article} />
   </head>
   <body>
     <noscript>

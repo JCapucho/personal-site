@@ -1,21 +1,25 @@
 ---
-import { config } from "../config";
+import { config } from "@/config";
+import type { ArticleMetadata } from "@/utils";
 
 type Props = {
   title: string;
-  description?: string;
-  ogImage?: string | undefined;
-  articleDate?: string | undefined;
+  description: string | undefined;
+  article: ArticleMetadata | undefined;
 };
 
-const { title, description, ogImage, articleDate } = Astro.props;
+const { title, description, article } = Astro.props;
 
 const titleContent = `${title} • ${config.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(
-  ogImage ? ogImage : "/social-card.png",
+  article?.image ? article.image.src : "/android-chrome-512x512.png",
   Astro.url
 ).href;
+const socialImageAlt = article?.image
+  ? article.image.alt
+  : "Logo for João Capucho's website";
+const language = article ? article.language : config.locale;
 ---
 
 <meta charset="UTF-8" />
@@ -34,6 +38,7 @@ const socialImageURL = new URL(
 <meta name="msapplication-TileColor" content="#da532c" />
 
 <link rel="canonical" href={canonicalURL} />
+<!-- RSS auto-discovery -->
 <link
   rel="alternate"
   type="application/rss+xml"
@@ -44,7 +49,7 @@ const socialImageURL = new URL(
 <!-- Primary Meta Tags -->
 <title>{titleContent}</title>
 <meta name="title" content={titleContent} />
-<meta name="description" content={description} />
+{description && <meta name="description" content={description} />}
 <meta name="author" content={config.author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="referrer" content="no-referrer" />
@@ -65,32 +70,36 @@ const socialImageURL = new URL(
 <meta name="color-scheme" content="dark light" />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content={articleDate ? "article" : "website"} />
+<meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+{description && <meta property="og:description" content={description} />}
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:site_name" content={config.title} />
-<meta property="og:locale" content={config.locale.replace("-", "_")} />
+<meta property="og:locale" content={language.replace("-", "_")} />
 <meta property="og:image" content={socialImageURL} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<!-- TODO: Add this -->
-<!-- <meta property="og:image:alt" content="A shiny red apple with a bite taken out" /> -->
+<!-- Are these needed? -->
+<!-- <meta property="og:image:width" content="1200" /> -->
+<!-- <meta property="og:image:height" content="630" /> -->
+<meta property="og:image:alt" content={socialImageAlt} />
 {
-  articleDate && (
+  article && (
     <>
       <meta property="article:author" content={config.author} />
-      <meta property="article:published_time" content={articleDate} />
-      {/* TODO */}
-      {/* <meta */}
-      {/* 	property="article:modified_time" */}
-      {/* 	content={lastModified || articleDate} */}
-      {/* /> */}
-      {/* TODO: this should be multiple tags */}
-      {/* <meta */}
-      {/* 	property="article:tag" */}
-      {/* 	content={tags} */}
-      {/* /> */}
+      <meta
+        property="article:published_time"
+        content={article.publishDate.toISOString()}
+      />
+      <meta
+        property="article:modified_time"
+        content={
+          article.lastEditDate
+            ? article.lastEditDate.toISOString()
+            : article.publishDate.toISOString()
+        }
+      />
+      {article.tags.map((tag) => (
+        <meta property="article:tag" content={tag} />
+      ))}
     </>
   )
 }
@@ -99,15 +108,6 @@ const socialImageURL = new URL(
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+{description && <meta property="twitter:description" content={description} />}
 <meta property="twitter:image" content={socialImageURL} />
-<!-- TODO: -->
-<!-- <meta property="twitter:image:alt" content={socialImageURL} /> -->
-
-<!-- RSS auto-discovery -->
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={config.title}
-  href="/rss.xml"
-/>
+<meta property="twitter:image:alt" content={socialImageAlt} />

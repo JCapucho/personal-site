@@ -1,0 +1,34 @@
+---
+import { formatDate } from "@/utils";
+import Link from "@/components/Link.astro";
+
+export interface Props {
+  title: string;
+  minutesRead: string;
+  publishDate: Date;
+  lastEditDate?: Date | undefined;
+  tags: string[];
+}
+
+const { title, minutesRead, publishDate, lastEditDate, tags } = Astro.props;
+---
+
+<h1 class="text-4xl font-bold text-accent">{title}</h1>
+<div class="flex flex-wrap divide-x divide-dashed divide-accent py-2">
+  <span class="shrink-0 px-4">{minutesRead}</span>
+  <span class="shrink-0 px-4">{formatDate(publishDate)}</span>
+  {
+    lastEditDate !== undefined && (
+      <span class="shrink-0 px-4">Last edited: {formatDate(lastEditDate)}</span>
+    )
+  }
+  {
+    tags.length !== 0 && (
+      <span class="inline-flex gap-2 pl-4">
+        {tags.map((tag) => (
+          <Link href={`/tags/${tag}`}>#{tag}</Link>
+        ))}
+      </span>
+    )
+  }
+</div>

@@ -22,6 +22,7 @@
     --theme-accent2: 200deg 85% 35%;
     --theme-quote: 351deg 66% 48%;
     --theme-menu-bg: hsla(0deg 0% 98% 85%);
+    --theme-code-bg: 41deg 30% 70%;
   }
 
   :root.dark {
@@ -32,6 +33,7 @@
     --theme-accent2: 42deg 60% 50%;
     --theme-quote: 220deg 70% 80%;
     --theme-menu-bg: hsla(160deg 10% 12% 75%);
+    --theme-code-bg: 260deg 10% 30%;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -43,6 +45,7 @@
       --theme-accent2: 42deg 60% 50%;
       --theme-quote: 220deg 70% 80%;
       --theme-menu-bg: hsla(160deg 10% 12% 75%);
+      --theme-code-bg: 260deg 10% 30%;
     }
   }
 
@@ -60,11 +63,15 @@
 
 @layer components {
   .article-prose {
-    @apply prose prose-capucho;
-    @apply mt-12;
-    @apply prose-headings:ms-2 prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ms-6 prose-headings:before:text-accent prose-headings:before:content-['#'];
-    @apply prose-a:border-b prose-a:border-accent2 prose-a:text-accent hover:prose-a:bg-accent2/50;
-    @apply prose-blockquote:border-l-4 prose-blockquote:border-quoteColor;
-    @apply prose-th:before:content-none;
+    @apply prose prose-capucho mt-12
+    prose-headings:ms-2 prose-headings:font-semibold
+    prose-a:border-b prose-a:border-accent2 prose-a:text-accent hover:prose-a:bg-accent2/50
+    prose-blockquote:border-l-4 prose-blockquote:border-quoteColor
+    prose-code:rounded prose-code:p-1 prose-code:!text-textColor
+    prose-th:before:content-none;
   }
+}
+
+.autolink-header {
+  @apply absolute -ms-6 font-semibold text-accent;
 }

@@ -1,22 +1,39 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./Layout.astro";
+import Link from "@/components/Link.astro";
+import PostHeader from "@/components/blog/Header.astro";
+import PostImage from "@/components/blog/Image.astro";
+import DraftWarning from "@/components/blog/DraftWarning.astro";
 
-const { title, isDraft } = Astro.props.frontmatter;
+export interface Props {
+  frontmatter: CollectionEntry<"blog">["data"];
+  pluginFrontmatter: { minutesRead: string };
+}
+
+const { title, description, draft, publishDate, lastEditDate, tags, image } =
+  Astro.props.frontmatter;
+const { minutesRead } = Astro.props.pluginFrontmatter;
 ---
 
-<BaseLayout title={title}>
-  <h1 class="text-4xl font-bold text-accent">{title}</h1>
+<BaseLayout
+  title={title}
+  description={description}
+  article={Astro.props.frontmatter}
+>
+  <p class="pb-4">
+    <Link href="/blog">&lt;- Return to all posts</Link>
+  </p>
+  <PostHeader
+    title={title}
+    minutesRead={minutesRead}
+    publishDate={publishDate}
+    lastEditDate={lastEditDate}
+    tags={tags}
+  />
+  {image && <PostImage image={image} />}
   <hr class="my-2 border-dashed border-textColor" />
-  {
-    isDraft && (
-      <div class="mx-auto my-4 rounded-sm bg-orange-700 p-4 text-center text-zinc-100">
-        <h1 class="text-center text-xl font-bold">
-          🛠️ This post is a draft 🛠️
-        </h1>
-        <p>It's contents are not final and might no be correct.</p>
-      </div>
-    )
-  }
+  {draft && <DraftWarning />}
   <article class="article-prose">
     <slot />
   </article>

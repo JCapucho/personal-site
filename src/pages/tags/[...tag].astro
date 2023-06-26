@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/Layout.astro";
+import BlogPost from "@/components/BlogPost.astro";
+import Link from "@/components/Link.astro";
+
+export async function getStaticPaths() {
+  const tags = new Set<string>();
+  const blogEntries = await getCollection("blog", ({ data }) => {
+    return data.draft !== true || import.meta.env.DEV;
+  });
+
+  for (const entry of blogEntries) {
+    for (const tag of entry.data.tags) {
+      tags.add(tag);
+    }
+  }
+
+  return [...tags].map((tag) => ({
+    params: { tag: tag },
+  }));
+}
+
+const { tag } = Astro.params;
+const allPosts = await getCollection("blog", ({ data }) => {
+  return tag && data.tags.includes(tag);
+});
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+---
+
+<BaseLayout title={"Blog"}>
+  <p class="pb-4">
+    <Link href="/blog">&lt;- Return to all posts</Link>
+  </p>
+  <p class="pb-4">
+    Blog entries with the tag <span class="text-accent">#{tag}</span>.
+  </p>
+  <ul>
+    {sortedPosts.map((post) => <BlogPost post={post} />)}
+  </ul>
+</BaseLayout>

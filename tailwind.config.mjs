@@ -21,6 +21,7 @@ export default {
         accent: withOpacityValue("--theme-accent"),
         accent2: withOpacityValue("--theme-accent2"),
         quoteColor: withOpacityValue("--theme-quote"),
+        codeBG: withOpacityValue("--theme-code-bg"),
       },
       typography: ({ theme }) => ({
         capucho: {
@@ -45,8 +46,14 @@ export default {
               fontWeight: "700",
             },
             code: {
-              border: "1px dotted #666",
-              borderRadius: "2px",
+              color: theme("colors.textColor"),
+              backgroundColor: theme("colors.codeBG"),
+            },
+            "code::before": {
+              content: "none",
+            },
+            "code::after": {
+              content: "none",
             },
             blockquote: {
               borderLeftWidth: "none",

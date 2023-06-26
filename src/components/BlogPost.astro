@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@/utils";
+import Link from "./Link.astro";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+---
+
+<li>
+  {post.data.draft && "🛠️ "}
+  <b>{formatDate(post.data.publishDate)}</b>
+  {" "}
+  <Link href={`/blog/${post.slug}`}>{post.data.title}</Link>
+</li>

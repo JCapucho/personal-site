@@ -1,24 +1,27 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/Layout.astro";
-// import BlogPost from "../components/BlogPost.astro";
+import BaseLayout from "@/layouts/Layout.astro";
+import BlogPost from "@/components/BlogPost.astro";
+import Link from "@/components/Link.astro";
 
 const allPosts = await getCollection("blog", ({ data }) => {
-  return data.isDraft !== true || import.meta.env.DEV;
+  return data.draft !== true || import.meta.env.DEV;
 });
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
 ---
 
 <BaseLayout title={"Blog"}>
-  <p>This is where I will post about my journey learning Astro.</p>
+  <p class="pb-4">
+    This is where I write about some things I've been working on, and in general
+    things that interest me.
+  </p>
+  <p class="pb-4">
+    A <Link href="/rss.xml">RSS feed</Link> is avaliable to receive automatic updates
+    for new blog posts.
+  </p>
   <ul>
-    {
-      allPosts.map((post) => (
-        // <BlogPost url={'/posts/' + post.slug} title={post.data.title} />
-        <a href={post.slug}>
-          {post.data.isDraft && "🛠️"}
-          {post.data.title}
-        </a>
-      ))
-    }
+    {sortedPosts.map((post) => <BlogPost post={post} />)}
   </ul>
 </BaseLayout>

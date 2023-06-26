@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 
 export async function get(context: APIContext) {
   const blog = await getCollection("blog", ({ data }) => {
-    return data.isDraft !== true;
+    return data.draft !== true;
   });
 
   return rss({
