@@ -1,3 +1,4 @@
+@import url(https://cdn.xeiaso.net/static/css/iosevka/family.css);
 @tailwind base;
 
 /* 
@@ -54,7 +55,12 @@
   }
 
   html body {
-    @apply mx-auto flex h-full max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-base font-normal text-textColor antialiased;
+    @apply mx-auto flex h-full max-w-3xl flex-col bg-bgColor px-8 pt-16 font-sans text-base font-normal text-textColor antialiased;
+  }
+
+  code,
+  pre {
+    @apply font-mono;
   }
 }
 
@@ -62,10 +68,13 @@
 @tailwind utilities;
 
 @layer components {
+  .link {
+    @apply border-b border-accent2 text-accent hover:bg-accent2/50;
+  }
+
   .article-prose {
-    @apply prose prose-capucho
-    prose-headings:ms-2 prose-headings:font-semibold
-    prose-a:border-b prose-a:border-accent2 prose-a:text-accent hover:prose-a:bg-accent2/50
+    @apply prose-a:link prose
+    prose-capucho prose-headings:ms-2 prose-headings:font-semibold
     prose-blockquote:border-l-4 prose-blockquote:border-quoteColor
     prose-code:rounded prose-code:p-1 prose-code:!text-textColor
     prose-th:before:content-none;

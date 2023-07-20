@@ -10,7 +10,7 @@ export async function get(context: APIContext) {
 
   return rss({
     title: `${config.title}’s Blog`,
-    description: "A humble Astronaut’s guide to the stars",
+    description: "Ramblings about tech",
     site: context.site!.toString(),
     items: blog.map((post) => ({
       title: post.data.title,

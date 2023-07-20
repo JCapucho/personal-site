@@ -21,6 +21,12 @@ export default defineConfig({
     rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, autolinkConfig]],
   },
 
+  vite: {
+    build: {
+      sourcemap: true,
+    },
+  },
+
   integrations: [
     tailwind({
       config: {

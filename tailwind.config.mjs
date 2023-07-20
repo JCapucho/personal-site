@@ -1,4 +1,5 @@
 import typographyPlugin from "@tailwindcss/typography";
+import defaultTheme from "tailwindcss/defaultTheme.js";
 
 function withOpacityValue(variable) {
   return ({ opacityValue }) => {
@@ -22,6 +23,10 @@ export default {
         accent2: withOpacityValue("--theme-accent2"),
         quoteColor: withOpacityValue("--theme-quote"),
         codeBG: withOpacityValue("--theme-code-bg"),
+      },
+      fontFamily: {
+        sans: ["Iosevka Aile Iaso", ...defaultTheme.fontFamily.sans],
+        mono: ["Iosevka Curly Iaso", ...defaultTheme.fontFamily.mono],
       },
       typography: ({ theme }) => ({
         capucho: {
