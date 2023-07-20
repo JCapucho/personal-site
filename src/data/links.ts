@@ -8,3 +8,10 @@ export const MENU_LINKS = [
     path: "/blog/",
   },
 ];
+
+export const SOCIAL_LINKS = {
+  github: "https://github.com/JCapucho",
+  mastodon: "https://fosstodon.org/@capucho",
+  matrix: "https://matrix.to/#/@jcapucho:matrix.org",
+  email: "jcapucho7@gmail.com",
+};

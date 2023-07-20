@@ -1,5 +1,6 @@
 ---
 import { config } from "@/config";
+import { SOCIAL_LINKS } from "@/data/links";
 import type { ArticleMetadata } from "@/utils";
 
 type Props = {
@@ -111,3 +112,6 @@ const language = article ? article.language : config.locale;
 {description && <meta property="twitter:description" content={description} />}
 <meta property="twitter:image" content={socialImageURL} />
 <meta property="twitter:image:alt" content={socialImageAlt} />
+
+<!-- Mastodon -->
+{SOCIAL_LINKS.mastodon && <link href={SOCIAL_LINKS.mastodon} rel="me" />}

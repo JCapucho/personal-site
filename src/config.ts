@@ -8,4 +8,6 @@ export const config = {
   darkThemeColor: "#2c3230",
 
   locale: "en-GB",
+
+  startYear: 2020,
 };

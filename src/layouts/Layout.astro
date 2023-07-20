@@ -2,6 +2,7 @@
 import Header from "@/components/Header.astro";
 import CustomHead from "@/components/Head.astro";
 import SkipLink from "@/components/SkipLink.astro";
+import Footer from "@/components/Footer.astro";
 import { config, themeStorageKey } from "@/config";
 import type { ArticleMetadata } from "@/utils";
 
@@ -65,5 +66,6 @@ const { title, description, article } = Astro.props;
     <main id="main" class="flex-1">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>

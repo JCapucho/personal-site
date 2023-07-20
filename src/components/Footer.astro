@@ -1,0 +1,34 @@
+---
+import { config } from "@/config";
+import { SOCIAL_LINKS } from "@/data/links";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="pt-6">
+  <hr class="mb-4 border-dashed border-textColor" />
+  <div
+    class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pb-4 text-center align-top text-gray-500 sm:flex-row sm:justify-between sm:text-xs"
+  >
+    <div class="me-0 sm:me-4">
+      Copyright {config.startYear}-{year}
+      {" "}
+      {config.author}
+    </div>
+    <nav
+      aria-label="More on this site"
+      class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
+    >
+      {
+        Object.entries(SOCIAL_LINKS).map(([name, link]) => (
+          <a
+            href={link}
+            class="px-4 py-2 sm:px-2 sm:py-0 sm:hover:text-textColor sm:hover:underline"
+          >
+            {name}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</footer>
