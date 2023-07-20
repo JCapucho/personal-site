@@ -10,7 +10,7 @@ export interface Props {
 const { post } = Astro.props;
 ---
 
-<li>
+<li class="mt-1">
   {post.data.draft && "🛠️ "}
   <b>{formatDate(post.data.publishDate)}</b>
   {" "}

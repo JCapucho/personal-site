@@ -1,14 +1,27 @@
 ---
+import { config } from "@/config";
+import { SOCIAL_LINKS } from "@/data/links";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Welcome to Astro.">
-  <main>
-    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
-      />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+<Layout title={config.author}>
+  <article class="text-lg">
+    <h1 class="text-xl">
+      Hello my name is <span class="text-accent">{config.author}</span>
+    </h1>
+    <br />
+    <p>
+      I'm a computer science student that likes to write software especially in
+      the areas of graphics, networking, programming languages development and
+      embedded systems.
     </p>
-  </main>
+    <br />
+    <p>
+      My work can be found on my <a class="link" href={SOCIAL_LINKS.github}
+        >Github</a
+      > and on my <a class="link" href="/blog">blog</a>.
+    </p>
+    <br />
+    <p>You can contact me trough the links in the bottom of this page.</p>
+  </article>
 </Layout>
